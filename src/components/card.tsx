@@ -1,5 +1,4 @@
 import { Data } from "@/types/api";
-import React from "react";
 
 const Card = ({ data }: { data: Data }) => {
   return (

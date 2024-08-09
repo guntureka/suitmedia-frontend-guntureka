@@ -12,7 +12,7 @@ export const Route = createFileRoute("/ideas")({
 
 function IdeasPage() {
   const { data } = useSuspenseQuery(useIdeasQuery({}));
-  const { data: datas, links, meta } = data;
+  const { data: datas, meta } = data;
   return (
     <main className="min-h-screen w-screen">
       {/* banner */}

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
