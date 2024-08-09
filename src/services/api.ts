@@ -6,14 +6,16 @@ const axiosInstance = axios.create({ baseURL: SERVER_BASE_URL });
 
 export const getIdeas = async ({ page, page_size, sort, append }: ApiInput) => {
   const url =
-    `api/ideas?page[number]=${page ?? ""}&page[size]=${page_size ?? ""}&sort=${sort}${append ? append.map((v) => `&append[]=${v}`).join("") : null}` as string;
+    `api/ideas?page[number]=${page ?? ""}&page[size]=${page_size ?? ""}${append ? append.map((v) => `&append[]=${v}`).join("") : null}&sort=${sort}` as string;
 
-  const res = await axiosInstance.get<Fetch<Data>>(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    }
-  }).then((v) => v.data);
+  const res = await axiosInstance
+    .get<Fetch<Data>>(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    .then((v) => v.data);
 
   return res;
 };

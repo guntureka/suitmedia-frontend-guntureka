@@ -26,7 +26,7 @@ const Navbar = () => {
   return (
     <header
       className={
-        "sticky left-0 top-0 z-50 w-full bg-orange-600/90 text-white " +
+        "fixed left-0 top-0 z-50 w-full bg-orange-600 text-white " +
         (show
           ? lastScrollY > 10
             ? "opacity-90 backdrop-blur-xl transition-opacity delay-75 duration-300 ease-in-out"
@@ -34,9 +34,11 @@ const Navbar = () => {
           : "opacity-0 transition-opacity delay-75 duration-300 ease-in-out")
       }
     >
-      <nav className="mx-auto flex w-[90%] items-center justify-between py-4 text-white">
+      <nav className="mx-auto flex w-[90%] items-center justify-between overflow-hidden py-4 text-white">
         <div>
-          <img src="/logo.png" alt="logo" className="h-20 w-auto" />
+          <Link to="/">
+            <img src="/logo.png" alt="logo" className="h-20 w-auto" />
+          </Link>
         </div>
         <div>
           <ul className="flex gap-4 text-xl">

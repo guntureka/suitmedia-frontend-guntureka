@@ -1,6 +1,6 @@
 export type ApiInput = {
-  page?: number;
-  page_size?: number;
+  page?: number | null;
+  page_size?: number | null;
   append?: Array<"small_image" | "medium_image">;
   sort?: "published_at" | "-published_at";
 };
