@@ -11,13 +11,43 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as WorkImport } from './routes/work'
+import { Route as ServicesImport } from './routes/services'
 import { Route as IdeasImport } from './routes/ideas'
+import { Route as ContactImport } from './routes/contact'
+import { Route as CareerImport } from './routes/career'
+import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
+const WorkRoute = WorkImport.update({
+  path: '/work',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ServicesRoute = ServicesImport.update({
+  path: '/services',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const IdeasRoute = IdeasImport.update({
   path: '/ideas',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ContactRoute = ContactImport.update({
+  path: '/contact',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CareerRoute = CareerImport.update({
+  path: '/career',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AboutRoute = AboutImport.update({
+  path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -37,6 +67,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/career': {
+      id: '/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerImport
+      parentRoute: typeof rootRoute
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactImport
+      parentRoute: typeof rootRoute
+    }
     '/ideas': {
       id: '/ideas'
       path: '/ideas'
@@ -44,12 +95,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdeasImport
       parentRoute: typeof rootRoute
     }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesImport
+      parentRoute: typeof rootRoute
+    }
+    '/work': {
+      id: '/work'
+      path: '/work'
+      fullPath: '/work'
+      preLoaderRoute: typeof WorkImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute, IdeasRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  AboutRoute,
+  CareerRoute,
+  ContactRoute,
+  IdeasRoute,
+  ServicesRoute,
+  WorkRoute,
+})
 
 /* prettier-ignore-end */
 
@@ -60,14 +133,34 @@ export const routeTree = rootRoute.addChildren({ IndexRoute, IdeasRoute })
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/ideas"
+        "/about",
+        "/career",
+        "/contact",
+        "/ideas",
+        "/services",
+        "/work"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/about": {
+      "filePath": "about.tsx"
+    },
+    "/career": {
+      "filePath": "career.tsx"
+    },
+    "/contact": {
+      "filePath": "contact.tsx"
+    },
     "/ideas": {
       "filePath": "ideas.tsx"
+    },
+    "/services": {
+      "filePath": "services.tsx"
+    },
+    "/work": {
+      "filePath": "work.tsx"
     }
   }
 }

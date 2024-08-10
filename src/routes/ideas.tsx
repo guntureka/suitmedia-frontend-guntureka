@@ -1,5 +1,5 @@
 import Card from "@/components/card";
-import { useIdeasQuery } from "@/services/queries";
+import { GetIdeasQuery } from "@/services/queries";
 import { ApiInput } from "@/types/api";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
@@ -9,7 +9,6 @@ import {
   MdOutlineKeyboardDoubleArrowLeft,
   MdOutlineKeyboardDoubleArrowRight,
 } from "react-icons/md";
-import { RxArrowLeft, RxDoubleArrowLeft } from "react-icons/rx";
 
 export const Route = createFileRoute("/ideas")({
   component: IdeasPage,
@@ -17,7 +16,7 @@ export const Route = createFileRoute("/ideas")({
     return {
       page: parseInt(search.page as string) || 1,
       page_size: parseInt(search.page_size as string) || 10,
-      sort: (search.sort as ApiInput["sort"]) || "published_at",
+      sort: (search.sort as ApiInput["sort"]) || "-published_at",
     };
   },
   loaderDeps: ({ search: { page, page_size, sort } }) => ({
@@ -30,7 +29,7 @@ export const Route = createFileRoute("/ideas")({
     deps: { page, page_size, sort },
   }) => {
     return await queryClient.ensureQueryData(
-      useIdeasQuery({ page, page_size, sort }),
+      GetIdeasQuery({ page, page_size, sort }),
     );
   },
 });
@@ -40,11 +39,11 @@ function IdeasPage() {
 
   const navigate = useNavigate({ from: Route.fullPath });
 
-  const { data } = useSuspenseQuery(useIdeasQuery(searchParams));
+  const { data } = useSuspenseQuery(GetIdeasQuery(searchParams));
   const { data: datas, meta } = data;
 
   return (
-    <main className="min-h-screen w-screen overflow-hidden">
+    <main className="min-h-screen overflow-hidden">
       {/* banner */}
       <div className="relative h-[60vh]">
         <img
@@ -60,7 +59,7 @@ function IdeasPage() {
         </div>
       </div>
       {/* data */}
-      <div className="relative mx-auto flex w-[80%] flex-col gap-10 py-20">
+      <div className="mx-auto flex w-[80%] flex-col gap-10 py-20">
         <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-2">
             <span>{`Showing ${meta.from}-${meta.to} of ${meta.total}`}</span>
@@ -115,21 +114,21 @@ function IdeasPage() {
           {datas && datas.map((v) => <Card data={v} key={v.id} />)}
         </div>
       </div>
-      <div className="relative mx-auto flex w-[80%] flex-col items-center justify-center gap-10 py-20">
-        <div className="flex w-full flex-wrap items-center justify-center gap-2">
+      <div className="relative mx-auto flex w-[80%] flex-col items-center justify-center gap-10 overflow-hidden py-20">
+        <div className="flex w-full flex-wrap items-center justify-center gap-2 overflow-hidden font-semibold">
           <Link
             search={(prev) => ({
               ...prev,
               page: 1,
             })}
-            disabled={searchParams.page! < 2}
+            disabled={searchParams?.page ? searchParams.page < 2 : false}
           >
             <MdOutlineKeyboardDoubleArrowLeft />
           </Link>
           <Link
             search={(prev) => ({
               ...prev,
-              page: searchParams ? searchParams?.page! - 1 : 1,
+              page: searchParams?.page ? searchParams.page - 1 : 1,
             })}
             disabled={searchParams.page! < 2}
           >
@@ -148,13 +147,12 @@ function IdeasPage() {
                     className: "rounded-lg bg-orange-500 px-2",
                   }}
                   className={
-                    searchParams.page === parseInt(v.label as string) ||
-                    isNaN(Number(v.label))
-                      ? ""
+                    meta.current_page === parseInt(v.label as string)
+                      ? "rounded-lg bg-orange-500 px-2"
                       : "rounded-lg px-2 hover:bg-gray-300"
                   }
                   disabled={
-                    searchParams.page === parseInt(v.label as string) ||
+                    meta.current_page === parseInt(v.label as string) ||
                     isNaN(Number(v.label))
                   }
                 >
@@ -166,7 +164,7 @@ function IdeasPage() {
           <Link
             search={(prev) => ({
               ...prev,
-              page: searchParams ? searchParams?.page! + 1 : 1,
+              page: searchParams?.page ? searchParams.page + 1 : 1,
             })}
             disabled={meta.last_page == searchParams.page}
           >
