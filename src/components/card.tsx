@@ -9,7 +9,7 @@ const Card = ({ data }: { data: Data }) => {
     <div className="grid h-96 w-full grid-rows-2 rounded-xl shadow-md">
       <div className="relative h-full w-full">
         <img
-          src={data?.medium_image[0].url ?? "./bg.jpg"}
+          src={data?.medium_image[0]?.url ?? "./bg.jpg"}
           alt={data?.medium_image?.[0]?.file_name ?? "./bg.jpg"}
           className="absolute inset-0 h-full w-full rounded-t-xl object-cover"
           loading="lazy"
