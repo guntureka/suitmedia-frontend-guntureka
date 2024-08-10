@@ -59,12 +59,12 @@ function IdeasPage() {
         </div>
       </div>
       {/* data */}
-      <div className="mx-auto flex w-[80%] flex-col gap-10 py-20">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
+      <div className="relative mx-auto flex w-[80%] flex-col gap-10 py-20">
+        <div className="relative z-20 flex flex-col items-start justify-between gap-4 md:flex-row">
           <div className="flex items-center gap-2">
             <span>{`Showing ${meta.from}-${meta.to} of ${meta.total}`}</span>
           </div>
-          <div className="flex w-full flex-col items-start justify-between gap-4 md:max-w-lg md:flex-row">
+          <div className="relative flex w-full flex-col items-start justify-between gap-4 md:max-w-lg md:flex-row">
             <div className="flex w-full items-center justify-between gap-2 md:justify-end">
               <label htmlFor="per_page">Show per page</label>
               <select
